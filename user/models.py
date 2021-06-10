@@ -1,6 +1,7 @@
 from django.db import models
 import secrets
 from django.contrib.postgres.fields import ArrayField
+import os
 
 # Create your models here.
 
@@ -24,7 +25,8 @@ class User(models.Model):
 	followers = ArrayField(models.IntegerField(), blank=True, default=list)
 	following = ArrayField(models.IntegerField(), blank=True, default=list)
 	events = ArrayField(models.IntegerField(), blank=True, default=list)
-	image = models.URLField(blank=True, null=True)
+	#image = models.URLField(blank=True, null=True)
+	image = models.ImageField(upload_to=os.environ.get("S3_FOLDER", "images"))
 	username = models.CharField(max_length=30, blank=True, null=True)
 
 
