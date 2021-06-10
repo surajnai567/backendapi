@@ -1,0 +1,53 @@
+#############################
+# Identify app and cofigure #
+#############################
+WEB_APP_ENVIRONMENT=local
+USE_ENV_FOR_CREDENTIALS=1
+#Comma delimited of list of allowed hosts
+ALLOWED_HOSTS=
+
+#########################################
+# Django  server and environment config #
+#########################################
+DJANGO_SECURITY_KEY=zr&a7_pt!o_k3u5a$lup!72#_f6m3f9kpovx$2g-ba+%&ni@p@
+DJANGO_SERVER_TIMEZONE=UTC
+DJANGO_SERVER_DEBUG_MODE=1
+
+###################
+# AWS Credentials #
+###################
+AWS_ACCESS_KEY_ID=REPLACE_ME
+AWS_SECRET_ACCESS_KEY=REPLACE_ME
+ACCESS_KEY_ID=REPLACE_ME
+SECRET_ACCESS_KEY=REPLACE_ME
+
+###############################
+# AWS S3 Buckets and CDN URLs #
+###############################
+S3_BUCKET_NAME=REPLACE_ME
+S3_AVATAR_BUCKET=REPLACE_ME
+S3_EVENT_IMAGE_BUCKET=REPLACE_ME
+S3_KEY_NAME=
+CDN_USER_AVATAR_BASE_URL=REPLACE_ME
+CDN_EVENT_IMAGE_BASE_URL=REPLACE_ME
+
+#################################
+# Database settings/credentials #
+#################################
+#Local credentials
+GIDAI_DB_USERNAME=postgres
+GIDAI_DB_PASSWORD=postgres
+GIDAI_DB_DATABASE=postgres
+GIDAI_DB_HOSTNAME=db
+GIDAI_DB_PORT=5432
+
+########################
+# Sendgrid credentials #
+########################
+SENDGRID_API_KEY=REPLACE_ME
+
+##################
+# Email Settings #
+##################
+DEFAULT_EMAIL_SENDER=surajnai567@gmail.com
+#DEFAULT_EMAIL_SENDER=noreply-dev@gidai.com

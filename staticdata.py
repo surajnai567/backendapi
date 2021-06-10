@@ -1,0 +1,1 @@
+CLOUDARY_BASE_URL = "https://res.cloudinary.com/hivhqr7dk/"

@@ -1,0 +1,39 @@
+# Base Template followed from this link:
+# https://bitbucket.org/blog/automating-amazon-elastic-container-ecr-container-builds-using-bitbucket-pipelines
+
+image: python:3.7.4-alpine3.10
+
+pipelines:
+  tags:
+    ecr-release-*:
+      - step:
+          name: Build and Test
+          services:
+            - docker
+          caches:
+            - pip
+          script:
+            - pip3 install awscli
+            - IMAGE="${ECR_GIDAI}"
+            - TAG=${BITBUCKET_BRANCH:-$BITBUCKET_TAG}
+            - aws configure set aws_access_key_id "${AWS_KEY}"
+            - aws configure set aws_secret_access_key "${AWS_SECRET}"
+            - eval $(aws ecr get-login --no-include-email --region ap-southeast-1 | sed 's;https://;;g')
+            - docker build -t $IMAGE:$TAG .
+            - docker push $IMAGE:$TAG
+  default:
+    - step:
+        name: Build and Test
+        services:
+          - docker
+        caches:
+          - pip
+        script:
+          - pip3 install awscli
+          - IMAGE="${ECR_GIDAI}"
+          - TAG=$DOCKER_IMAGE_NAME
+          - aws configure set aws_access_key_id "${AWS_KEY}"
+          - aws configure set aws_secret_access_key "${AWS_SECRET}"
+          - eval $(aws ecr get-login --no-include-email --region us-east-1 | sed 's;https://;;g')
+          - docker build . --file Dockerfile -t $IMAGE:$TAG
+          - docker push $IMAGE:$TAG

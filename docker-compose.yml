@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  db:
+    container_name: ${COMPOSE_PROJECT_NAME}_db
+    build:
+      context: build/postgres
+    volumes:
+      - "pg_data:/var/lib/postgresql/data"
+    ports:
+      - "${POSTGRES_PUBLISHED_PORT}:5432"
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: sa
+      POSTGRES_PASSWORD: ${LOCAL_PG_SA_PASSWORD}
+    networks:
+      - gidai_net
+  backend:
+    container_name: ${COMPOSE_PROJECT_NAME}_backend
+    build:
+      context: .
+    #command: python manage.py runserver 0.0.0.0:${BACKEND_LISTEN_PORT}
+    environment:
+      CONTAINER_START_COMMAND: ${BACKEND_CONTAINER_START_COMMAND}
+      DJANGO_API_PORT: ${BACKEND_LISTEN_PORT}
+    env_file:
+      - .backend-env
+    volumes:
+      - .:/code
+    ports:
+      - "${BACKEND_PUBLISHED_PORT}:${BACKEND_LISTEN_PORT}"
+    depends_on:
+      - db
+    networks:
+      - gidai_net
+volumes:
+  pg_data:
+networks:
+  gidai_net:
+    driver: bridge
+    ipam:
+      driver: default
